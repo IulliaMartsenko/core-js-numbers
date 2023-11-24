@@ -107,8 +107,11 @@ function getLinearEquationRoot(a, b) {
  *   (0,-1) (1,0)    => π/2
  *   (0,1) (0,1)     => 0
  */
-function getAngleBetweenVectors(/* x1, y1, x2, y2 */) {
-  throw new Error('Not implemented');
+function getAngleBetweenVectors(x1, y1, x2, y2) {
+  const rad =
+    (x1 * x2 + y1 * y2) /
+    (Math.sqrt(x1 ** 2 + y1 ** 2) * Math.sqrt(x2 ** 2 + y2 ** 2));
+  return Math.acos(rad);
 }
 
 /**
@@ -229,9 +232,8 @@ function isPrime(n) {
  *   toNumber(new Number(42), 0) => 42
  */
 function toNumber(value, def) {
-  const g = toNumber(value);
-  if ((g) => 0) {
-    return g;
+  if (Number(value)) {
+    return value;
   }
   return def;
 }
@@ -264,10 +266,16 @@ function getCube(num) {
  *   3  => 2
  *   10 => 55
  */
-function getFibonacciNumber(/* index */) {
-  throw new Error('Not implemented');
+function getFibonacciNumber(index) {
+  let prev = 0;
+  let next = 1;
+  for (let i = 0; i < index; i += 1) {
+    const temp = next;
+    next = prev + next;
+    prev = temp;
+  }
+  return prev;
 }
-
 /**
  * Returns the sum of all numbers from 1 to n.
  *
@@ -298,8 +306,12 @@ function getSumToN(n) {
  *   202 => 4  // (2+0+2)
  *   5   => 5  // 5
  */
-function getSumOfDigits(/* num */) {
-  throw new Error('Not implemented');
+function getSumOfDigits(num) {
+  return String(num)
+    .split('')
+    .reduce((sum, current) => {
+      return sum + Number(current);
+    }, 0);
 }
 
 /**
@@ -313,8 +325,11 @@ function getSumOfDigits(/* num */) {
  *   16  => true
  *   15  => false
  */
-function isPowerOfTwo(/* num */) {
-  throw new Error('Not implemented');
+function isPowerOfTwo(num) {
+  while (num > 2) {
+    num /= 2;
+  }
+  return num === 2;
 }
 
 /**
@@ -420,8 +435,15 @@ function getNumberValue(number) {
  * 5        => true
  * '5'      => false
  */
-function isNumber(/* number */) {
-  throw new Error('Not implemented');
+function isNumber(number) {
+  if (
+    typeof number === 'number' &&
+    number !== Infinity &&
+    !Number.isNaN(number)
+  ) {
+    return true;
+  }
+  return false;
 }
 
 /**
@@ -608,8 +630,9 @@ function getRandomInteger(/* min, max */) {
  * @example:
  * 3, 4 => 5
  */
-function getHypotenuse(/* a, b */) {
-  throw new Error('Not implemented');
+function getHypotenuse(a, b) {
+  const rad = Math.atan2(a, b);
+  return a / Math.sin(rad);
 }
 
 /**
@@ -625,8 +648,8 @@ function getHypotenuse(/* a, b */) {
  * 10 => 5
  * 15 => 8
  */
-function getCountOfOddNumbers(/* number */) {
-  throw new Error('Not implemented');
+function getCountOfOddNumbers(number) {
+  return Math.ceil(Math.abs(number) / 2);
 }
 
 module.exports = {
